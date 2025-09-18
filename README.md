@@ -5,9 +5,13 @@ We will go over steps in lecture. You should fill out the following:
 
 ## What steps do I need to do when I download this repo to get it running?
 
+update the pipfile to python 3.13.2 and delete the pipfile lock
+`pipenv install` - install the dependencies
 
 
 ## What commands starts the server?
+
+test the server by running it locally without entering the pipenv using the command `pipenv run flask --app server.py run`
 
 
 ## Before render
