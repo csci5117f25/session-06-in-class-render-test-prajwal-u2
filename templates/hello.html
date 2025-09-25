@@ -14,5 +14,19 @@
 {% if name %}
 <h2>and hello to {{name}}</h2>
 {% endif %}
+
+<h2>Sign Guestbook</h2>
+
+<form action="/guestbook" method="POST" class="pure-form pure-form-stacked">
+
+    <label for="name">1. Name</label>
+    <input type="text" id="name" name="name" placeholder="Enter your name">
+
+    <label for="message">2. Message</label>
+    <input type="message" id="message" name="message" placeholder="Enter your message">
+
+    <button type="submit">Submit</button>
+</form>
+
 </body>
 </html>

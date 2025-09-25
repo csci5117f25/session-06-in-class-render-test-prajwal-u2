@@ -8,11 +8,14 @@ We will go over steps in lecture. You should fill out the following:
 update the pipfile to python 3.13.2 and delete the pipfile lock
 `pipenv install` - install the dependencies
 
+test the server by running it locally without entering the pipenv using the command `pipenv run flask --app server.py run`
+
 
 ## What commands starts the server?
 
-test the server by running it locally without entering the pipenv using the command `pipenv run flask --app server.py run`
+`pip install pipenv && pipenv install` - install command on render
 
+`pipenv run gunicorn server:app` - run command for the app to start
 
 ## Before render
 
