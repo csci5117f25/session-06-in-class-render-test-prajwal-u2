@@ -4,23 +4,47 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
 
     <title>Hi!</title>
 </head>
 <body>
-  <p>You have signed the guestbook</p>
-  <p>Guestbook entries:</p>
-  <ul>
-    {% for entry in entries %}
-      <li>{{ entry }}</li>
-    {% endfor %}
-  </ul>
-  </br>
-  </br>
-  <form action="/">
-    <input type="submit" value="Go to main page" />
-  </form>
+  <header style="text-align: center; background-color: rgb(235, 235, 155)">
+    <h2>HEADER</h2>
+  </header>
 
+  <div class="pure-g">
+    <div class="pure-u-1-5" style="background-color: rgb(202, 224, 231)">
+      <h2 style="text-align: center">PAGES</h2>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/guestbook">Guestbook</a></li>
+      </ul>
+    </div>
+    <div class="pure-u-3-5" style="background-color: rgb(139, 216, 247)">
+      <h2 style="text-align: center">CONTENT</h2>
+      <h3 style="text-align: center">Guestbook Entries</h3>
+      <ul>
+        {% for entry in entries %}
+          <li>{{ entry }}</li>
+        {% endfor %}
+      </ul>
+      </br>
+      </br>
+      <form action="/" style="text-align: center">
+        <input type="submit" value="Go to main page"/>
+      </form>
+    </div>
+    <div class="pure-u-1-5" style="background-color:  rgb(202, 224, 231)">
+      <h2 style="text-align: center">ADDITIONAL CONTENT</h2>
+      <ul>
+        <li>Click on Home to go to the main page</li>
+        <li>Click on Guestbook to go to the guestbook page</li>
+      </ul>
+    </div>
+  </div>
+  <footer style="text-align: center; background-color: rgb(235, 235, 155)">
+    <h2>FOOTER</h2>
+  </footer>
 </body>
 </html>
