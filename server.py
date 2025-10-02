@@ -1,13 +1,30 @@
-from flask import Flask, render_template, current_app, g, request
+from flask import Flask, render_template, current_app, g, request, session, redirect, url_for
 import os
 import psycopg2
 from psycopg2.pool import ThreadedConnectionPool
 from psycopg2.extras import DictCursor
 from contextlib import contextmanager
 from dotenv import load_dotenv
+from urllib.parse import quote_plus, urlencode
+from authlib.integrations.flask_client import OAuth
 
 
 app = Flask(__name__)
+app.secret_key = os.environ['FLASK_SECRET_KEY']
+
+
+oauth = OAuth(app)
+
+oauth.register(
+    "auth0",
+    client_id=os.environ.get("AUTH0_CLIENT_ID"),
+    client_secret=os.environ.get("AUTH0_CLIENT_SECRET"),
+    client_kwargs={
+        "scope": "openid profile email",
+    },
+    server_metadata_url=f'https://{os.environ.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
+)
+
 
 pool = None
 load_dotenv()
@@ -48,9 +65,39 @@ def get_db_cursor(commit=False):
       finally:
           cursor.close()
 
+# Auth0
+
+@app.route("/login")
+def login():
+    return oauth.auth0.authorize_redirect(
+        redirect_uri=url_for("callback", _external=True)
+    )
+
+@app.route("/callback", methods=["GET", "POST"])
+def callback():
+    token = oauth.auth0.authorize_access_token()
+    # can check for user existence here
+    session["user"] = token
+    # return redirect("/")
+    return redirect(url_for("hello"))
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(
+        "https://" + os.environ.get("AUTH0_DOMAIN")
+        + "/v2/logout?"
+        + urlencode(
+            {
+                "returnTo": url_for("hello", _external=True),
+                "client_id": os.environ.get("AUTH0_CLIENT_ID"),
+            },
+            quote_via=quote_plus,
+        )
+    )
 
 def add_guestbook_entry(name, message):
-
     with get_db_cursor(True) as cur:
         current_app.logger.info("Adding guestbook entry %s", name)
         cur.execute("INSERT INTO guestbook (name, message) values (%s, %s)", (name, message))

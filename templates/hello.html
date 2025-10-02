@@ -15,6 +15,17 @@
 <h2>and hello to {{name}}</h2>
 {% endif %}
 
+{% if session %}
+<h1> SESSION EXISTS</h1>
+<code>
+    <!-- <pre>{{ session.user|tojson }}</pre> -->
+</code>
+{% else %}
+<h1> SESSION DOES NOT EXIST</h1>
+{% endif %}
+
+
+
 <h2>Sign Guestbook</h2>
 
 <form action="/guestbook" method="POST" class="pure-form pure-form-stacked">
